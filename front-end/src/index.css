@@ -1,0 +1,165 @@
+/* index.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f0f0; /* Fundo cinza claro */
+  color: #333; /* Texto preto */
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 130vh; /* Altura total da tela */
+  flex-direction: column; /* Direção das colunas */
+}
+
+.app-container {
+  padding: 20px;
+}
+
+.container {
+  background-color: #fff; /* Fundo branco */
+  padding: 45px; /* Aumenta o padding */
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+  width: 100%; /* Largura responsiva */
+  max-width: 1200px; /* Largura máxima para o layout */
+  margin-top: 30px;
+  position: relative; /* Para permitir posicionamento de elementos fixos dentro */
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 10px ; /* Adiciona margem */
+}
+
+h1 {
+  font-size: 2em; /* Tamanho do título principal */
+}
+
+h2 {
+  font-size: 1.8em; /* Aumenta o tamanho do subtítulo */
+}
+
+form {
+  position: sticky; /* Mantém o formulário fixo ao rolar */
+  top: 0; /* Fica no topo do contêiner */
+  background-color: #fff; /* Fundo branco para o formulário */
+  z-index: 10; /* Garante que o formulário fique acima de outros elementos */
+  padding: 45px; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+input, select {
+  width: 100%; /* Define a largura total do campo */
+  padding: 10px; /* Adiciona padding para melhorar a usabilidade */
+  font-size: 16px; /* Aumenta o tamanho da fonte */
+  border: 1px solid #ccc; /* Adiciona uma borda */
+  border-radius: 4px; /* Arredonda os cantos */
+  margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+input:focus {
+  border-color: #666; /* Borda cinza escuro ao focar */
+}
+
+button {
+  background-color: #000; /* Fundo preto */
+  color: #fff; /* Texto branco */
+  padding: 12px; /* Aumenta o padding */
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em; /* Aumenta o tamanho da fonte */
+}
+
+.action-button {
+  margin-right: 10px; /* Espaço à direita de cada botão */
+  margin-left: 10px;
+}
+
+/* Remove a margem do último botão */
+.action-button:last-child {
+  margin-right: 0; /* Remove a margem do último botão */
+}
+
+button:hover {
+  background-color: #dd2020; /* Fundo cinza escuro ao passar o mouse */
+}
+
+
+.button-container button {
+  width: auto; /* Largura automática para os botões */
+  margin: 0 5px; /* Margem lateral para os botões */
+}
+
+.tabela-container {
+  max-height: 300px; /* Ajuste a altura conforme necessário */
+  overflow-y: auto; /* Permite rolagem vertical */
+  margin-top: 20px; /* Aumenta a margem superior para descer o contêiner */
+  border: 1px solid #ccc; /* Borda para o contêiner */
+  border-radius: 4px; /* Bordas arredondadas */
+  width: 99%; /* Ajuste a largura conforme necessário */
+}
+table {
+  width: 100%;
+  border-collapse: collapse; /* Remove espaços entre as células */
+}
+
+th, td {
+  border: 1px solid #ccc; /* Borda das células */
+  padding: 12px; /* Aumenta o padding */
+  text-align: left; /* Alinhamento à esquerda do texto */
+  font-size: 1em; /* Tamanho da fonte */
+}
+
+th {
+  background-color: #f7f7f7; /* Fundo cinza claro para o cabeçalho */
+  font-weight: bold; /* Negrito para o cabeçalho */
+}
+
+.alerta-sucesso {
+  background-color: #d4edda; /* Fundo verde claro */
+  color: #155724; /* Texto verde escuro */
+  border: 1px solid #c3e6cb; /* Borda verde */
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 5px; /* Bordas arredondadas */
+  text-align: center; /* Centraliza o texto */
+  margin-top: 20px; /* Espaço acima do alerta */
+  position: relative; /* Para posicionar */
+  left: 50%; /* Alinha à esquerda */
+  transform: translateX(-50%); /* Centraliza o alerta */
+  width: 80%; /* Largura do alerta */
+  max-width: 400px; /* Largura máxima */
+  margin-left: auto; /* Margens automáticas */
+  margin-right: auto; /* Margens automáticas */
+}
+
+select {
+  width: 100%; /* Define a largura total do campo */
+  padding: 10px; /* Adiciona padding para melhorar a usabilidade */
+  font-size: 16px; /* Aumenta o tamanho da fonte */
+  border: 1px solid #ccc; /* Adiciona uma borda */
+  border-radius: 4px; /* Arredonda os cantos */
+  margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+input[type="text"] {
+  width: 100%; /* Define a largura total do campo */
+  padding: 10px; /* Adiciona padding para melhorar a usabilidade */
+  font-size: 16px; /* Aumenta o tamanho da fonte */
+  border: 1px solid #ccc; /* Adiciona uma borda */
+  border-radius: 4px; /* Arredonda os cantos */
+  margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+.container img {
+  width: 120px; /* ou o tamanho desejado */
+  height: auto; /* mantém a proporção da imagem */
+  position: absolute; /* permite posicionar a imagem livremente */
+  top: 0%;
+  left: 60px; /* ajusta a distância da esquerda */
+}
+
