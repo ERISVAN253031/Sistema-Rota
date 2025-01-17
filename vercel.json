@@ -17,7 +17,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/back-end/build/index.html"
+        "dest": "/front-end/src/index.js"
       }
     ]
   }
