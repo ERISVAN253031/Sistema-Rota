@@ -19,7 +19,7 @@ const AlterarCadastro = () => {
   useEffect(() => {
     const fetchZonas = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/zonas");
+        const response = await axios.get("http://localhost:5001/zonas");
         setZonas(response.data);
       } catch (error) {
         console.error("Erro ao buscar zonas:", error);
@@ -33,7 +33,7 @@ const AlterarCadastro = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:5000/motoristas/filter",
+          "http://localhost:5001/motoristas/filter",
           { params: filters }
         );
         setMotoristas(response.data);
@@ -58,7 +58,7 @@ const AlterarCadastro = () => {
 
   const cadastrarMotorista = async () => {
     try {
-      await axios.post("http://localhost:5000/motoristas", novoMotorista);
+      await axios.post("http://localhost:5001/motoristas", novoMotorista);
       alert("Motorista cadastrado com sucesso!");
       setNovoMotorista({ nome: "", placa: "", zona_id: "" });
       setFilters({ nome: "", placa: "", zona_id: "" });
@@ -83,7 +83,7 @@ const AlterarCadastro = () => {
     if (selectedMotorista) {
       try {
         await axios.put(
-          `http://localhost:5000/motoristas/${selectedMotorista.id}`,
+          `http://localhost:5001/motoristas/${selectedMotorista.id}`,
           selectedMotorista
         );
         alert("Motorista atualizado com sucesso!");
@@ -106,7 +106,7 @@ const AlterarCadastro = () => {
   const excluirMotorista = async (id) => {
     if (window.confirm("Você tem certeza que deseja excluir este motorista?")) {
       try {
-        await axios.delete(`http://localhost:5000/motoristas/${id}`);
+        await axios.delete(`http://localhost:5001/motoristas/${id}`);
         setMotoristas((prev) =>
           prev.filter((motorista) => motorista.id !== id)
         );

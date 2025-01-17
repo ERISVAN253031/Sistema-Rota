@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Importando useNavigate
 import logo from "../src/assets/Logo.jpeg"; // Ajuste o caminho conforme a nova localização
+
 const Cadastro = () => {
   const [cep, setCep] = useState("");
   const [endereco, setEndereco] = useState("");
@@ -12,9 +13,11 @@ const Cadastro = () => {
   const navigate = useNavigate(); // Criando a instância de navegação
 
   useEffect(() => {
+    console.log("Fetching zonas..."); // Log para verificar se o efeito é chamado
     const fetchZonas = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/zonas");
+        const response = await axios.get("http://localhost:5001/zonas");
+        console.log("Zonas recebidas:", response.data); // Adicione este log
         setZonasDisponiveis(response.data);
       } catch (error) {
         console.error("Erro ao buscar zonas:", error);
@@ -62,7 +65,7 @@ const Cadastro = () => {
 
     try {
       const resposta = await axios.post(
-        "http://localhost:5000/enderecos",
+        "http://localhost:5001/enderecos",
         dadosParaEnviar
       );
       if (resposta.status === 201) {

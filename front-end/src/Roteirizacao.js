@@ -20,7 +20,7 @@ const Roteirizacao = () => {
 
     setLoading(true);
     try {
-      const resposta = await axios.get(`http://localhost:5000/enderecos/${cep}`);
+      const resposta = await axios.get(`http://localhost:5001/enderecos/${cep}`);
       console.log(resposta.data); // Verifique a estrutura da resposta
 
       if (resposta.data) {
