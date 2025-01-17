@@ -1,20 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+const path = require('path'); // Importar o módulo path para manipular caminhos de arquivos
 
 const app = express();
-const port = 5000; // Porta da API
+const port = process.env.PORT || 5001; // Porta da API
 
 app.use(cors());
 app.use(express.json()); // Middleware para analisar JSON
 
 // Conectar ao banco de dados MySQL
 const db = mysql.createConnection({
-  host: '127.0.0.1',
+  host: process.env.DB_HOST || 'localhost',
   port: 3306,
-  user: 'root',
-  password: 'Josesales25303131@',
-  database: 'Cadastros'
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'Josesales25303131@',
+  database: process.env.DB_NAME || 'cadastros'
 });
 
 // Conectar ao banco de dados
@@ -230,8 +231,16 @@ app.get('/enderecos/:cep', (req, res) => {
   });
 });
 
+// Servir os arquivos estáticos do frontend
+app.use(express.static(path.join(__dirname, 'build'))); // Ajuste o caminho conforme necessário
+
+// Rota para o frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html')); // Ajuste o caminho conforme necessário
+});
+
 // Iniciar o servidor
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
 
