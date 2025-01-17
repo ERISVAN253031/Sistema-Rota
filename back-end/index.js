@@ -1,10 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const path = require('path'); // Importar o módulo path para manipular caminhos de arquivos
 
 const app = express();
-const port = process.env.PORT || 5001; // Porta da API
 
 app.use(cors());
 app.use(express.json()); // Middleware para analisar JSON
@@ -66,10 +64,9 @@ const createTables = () => {
 
 createTables();
 
-// Rota para obter todas as zonas
+// Rotas
 app.get('/zonas', (req, res) => {
   const sql = 'SELECT * FROM zonas';
-  
   db.query(sql, (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Erro ao obter zonas' });
@@ -82,14 +79,12 @@ app.get('/zonas', (req, res) => {
 app.post('/motoristas', (req, res) => {
   const { nome, placa, zona_id } = req.body;
 
-  // Verificar se a zona_id existe
   const checkZonaSql = 'SELECT * FROM zonas WHERE id = ?';
   db.query(checkZonaSql, [zona_id], (err, zonaResults) => {
     if (err || zonaResults.length === 0) {
       return res.status(400).json({ message: 'Zona inválida' });
     }
 
-    // Inserir o novo motorista
     const sql = 'INSERT INTO motoristas (nome, placa, zona_id) VALUES (?, ?, ?)';
     db.query(sql, [nome, placa, zona_id], (err, result) => {
       if (err) {
@@ -107,7 +102,6 @@ app.get('/motoristas/filter', (req, res) => {
   let sql = 'SELECT motoristas.*, zonas.nome AS zona_nome FROM motoristas LEFT JOIN zonas ON motoristas.zona_id = zonas.id';
   const params = [];
 
-  // Adiciona condições para a consulta
   if (nome) {
     sql += ' WHERE motoristas.nome LIKE ?';
     params.push(`%${nome}%`);
@@ -135,14 +129,12 @@ app.put('/motoristas/:id', (req, res) => {
   const { id } = req.params;
   const { nome, placa, zona_id } = req.body;
 
-  // Verificar se a zona_id existe
   const checkZonaSql = 'SELECT * FROM zonas WHERE id = ?';
   db.query(checkZonaSql, [zona_id], (err, zonaResults) => {
     if (err || zonaResults.length === 0) {
       return res.status(400).json({ message: 'Zona inválida' });
     }
 
-    // Atualizar o motorista
     const sql = 'UPDATE motoristas SET nome = ?, placa = ?, zona_id = ? WHERE id = ?';
     db.query(sql, [nome, placa, zona_id, id], (err) => {
       if (err) {
@@ -158,7 +150,6 @@ app.put('/motoristas/:id', (req, res) => {
 app.delete('/motoristas/:id', (req, res) => {
   const { id } = req.params;
 
-  // Excluir o motorista
   const sql = 'DELETE FROM motoristas WHERE id = ?';
   db.query(sql, [id], (err) => {
     if (err) {
@@ -173,14 +164,12 @@ app.delete('/motoristas/:id', (req, res) => {
 app.post('/enderecos', (req, res) => {
   const { cep, endereco, bairro, zona_id } = req.body;
 
-  // Verificar se a zona_id existe
   const checkZonaSql = 'SELECT * FROM zonas WHERE id = ?';
   db.query(checkZonaSql, [zona_id], (err, zonaResults) => {
     if (err || zonaResults.length === 0) {
       return res.status(400).json({ message: 'Zona inválida' });
     }
 
-    // Verificar se o CEP já está cadastrado
     const checkCepSql = 'SELECT * FROM enderecos WHERE cep = ?';
     db.query(checkCepSql, [cep], (err, cepResults) => {
       if (err) {
@@ -191,7 +180,6 @@ app.post('/enderecos', (req, res) => {
         return res.status(400).json({ message: 'CEP já cadastrado' });
       }
 
-      // Se o CEP não estiver cadastrado, prosseguir com a inserção
       const sql = 'INSERT INTO enderecos (cep, endereco, bairro, zona_id) VALUES (?, ?, ?, ?)';
       db.query(sql, [cep, endereco, bairro, zona_id], (err, result) => {
         if (err) {
@@ -208,7 +196,6 @@ app.post('/enderecos', (req, res) => {
 app.get('/enderecos/:cep', (req, res) => {
   const { cep } = req.params;
 
-  // Buscar o endereço pelo CEP
   const sql = `
     SELECT enderecos.*, zonas.nome AS zona_nome, motoristas.nome AS motorista, motoristas.placa
     FROM enderecos
@@ -219,38 +206,16 @@ app.get('/enderecos/:cep', (req, res) => {
 
   db.query(sql, [cep], (err, results) => {
     if (err) {
-      console.error('Erro ao buscar endereço:', err); // Mostra o erro completo
+      console.error('Erro ao buscar endereço:', err);
       return res.status(500).json({ message: 'Erro ao buscar endereço' });
     }
     if (results.length > 0) {
       res.status(200).json(results[0]);
     } else {
-      // Mensagem de erro atualizada
       res.status(404).json({ message: 'CEP não cadastrado' });
     }
   });
 });
 
-// Servir os arquivos estáticos do frontend
-app.use(express.static(path.join(__dirname, 'build'))); // Ajuste o caminho conforme necessário
-
-// Rota para o frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html')); // Ajuste o caminho conforme necessário
-});
-
-// Iniciar o servidor
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
-
-// Fechar a conexão ao encerrar o servidor
-process.on('SIGINT', () => {
-  db.end(err => {
-    if (err) {
-      return console.error('Erro ao fechar a conexão com o banco de dados:', err.message);
-    }
-    console.log('Conexão com o banco de dados encerrada.');
-    process.exit(0);
-  });
-});
+// Exportar a aplicação
+module.exports = app;
