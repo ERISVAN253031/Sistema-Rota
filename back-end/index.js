@@ -4,17 +4,17 @@ const mysql = require('mysql2');
 const path = require('path'); // Importar o módulo path para manipular caminhos de arquivos
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Porta da API
+const port = 5001; // Porta da API
 
 app.use(cors());
 app.use(express.json()); // Middleware para analisar JSON
 
 // Conectar ao banco de dados MySQL
 const db = mysql.createConnection({
-  host: '192.168.50.153', // Substitua pelo host do seu banco de dados
+  host: '127.0.0.1',
   port: 3306,
-  user: 'root', // Substitua pelo seu usuário do banco de dados
-  password: 'Josesales25303131@', // Substitua pela sua senha do banco de dados
+  user: 'root',
+  password: 'Josesales25303131@',
   database: 'Cadastros'
 });
 
@@ -240,9 +240,10 @@ app.get('*', (req, res) => {
 });
 
 // Iniciar o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
+
 
 // Fechar a conexão ao encerrar o servidor
 process.on('SIGINT', () => {
@@ -254,6 +255,3 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
-
-// Exportar o app para uso no Vercel
-module.exports = app;
